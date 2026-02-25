@@ -87,10 +87,10 @@ export async function POST(req: Request) {
   try {
     const provider = await getAIProvider("gemini");
     rawAIResponse = await provider.generateResponse(history, systemPrompt);
-  } catch {
-    // Fallback mock response when API key not set
-    rawAIResponse =
-      "This is a sample response. AI integration requires a valid OpenAI API key. The format engine will still transform this response. Check your .env file for OPENAI_API_KEY.";
+  } catch (err) {
+    console.error("[AI Provider Error]", err);
+    const errMsg = err instanceof Error ? err.message : String(err);
+    rawAIResponse = `AI error: ${errMsg}`;
   }
 
   // Apply format engine post-processing
