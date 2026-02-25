@@ -15,7 +15,7 @@ export async function GET(
   const userId = (session.user as { id: string }).id;
   const { id } = await params;
 
-  const chat = await prisma.chat.findUnique({
+  const chat = await prisma.chat.findFirst({
     where: { id, userId },
     include: { format: true, messages: { orderBy: { createdAt: "asc" } } },
   });
@@ -39,6 +39,6 @@ export async function DELETE(
   const userId = (session.user as { id: string }).id;
   const { id } = await params;
 
-  await prisma.chat.delete({ where: { id, userId } });
+  await prisma.chat.deleteMany({ where: { id, userId } });
   return NextResponse.json({ ok: true });
 }

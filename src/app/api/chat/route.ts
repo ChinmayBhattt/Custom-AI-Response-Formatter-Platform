@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   // Create or reuse chat
   let chat;
   if (chatId) {
-    chat = await prisma.chat.findUnique({
+    chat = await prisma.chat.findFirst({
       where: { id: chatId, userId },
       include: { messages: { orderBy: { createdAt: "asc" } } },
     });
