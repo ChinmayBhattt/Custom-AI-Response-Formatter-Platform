@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
   let rawAIResponse: string;
   try {
-    const provider = await getAIProvider("openai");
+    const provider = await getAIProvider("gemini");
     rawAIResponse = await provider.generateResponse(history, systemPrompt);
   } catch {
     // Fallback mock response when API key not set
